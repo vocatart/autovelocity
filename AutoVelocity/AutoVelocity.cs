@@ -1,12 +1,8 @@
 ﻿using System;
-using System.IO;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using utauPlugin;
-using System.Configuration;
 using System.Text.RegularExpressions;
+using System.Configuration;
 
 namespace AutoVelocity
 {
@@ -18,15 +14,15 @@ namespace AutoVelocity
             utauPlugin.Input();
 
             // initialize all variables
-            int baseVelocity = 100; // velocity on a quarter note if the tempo was 120 (default velocity)
-            float baseTempo = 120; // usually the tempo at which the voicebank was recorded, almost always 120
-            int velocityAmount = 10; // how much velocity is added to notes smaller or larger than a quarter note
-            bool doManualVelocity = false; // enables manual velocity variables (doesnt do anything at the moment)
-            int manualVelocity = 120;
-            int qNoteLength = 480; // length of a quarter note, shouldn't really be changed but whatever
-            bool endingVelocity = true; // whether or not the plugin will edit the velocity of ending notes
-            bool beginningVelocity = true; // whether or not the plugin will edit the velocity of starting -CV or -CC notes
-            bool modSmooth = true; // whether or not the plugin will set mod to 0 on Phase 2
+            int baseVelocity = Convert.ToInt32(ConfigurationManager.AppSettings["baseVelocity"]); // velocity on a quarter note if the tempo was 120 (default velocity)
+            float baseTempo = float.Parse(ConfigurationManager.AppSettings["baseTempo"]); // usually the tempo at which the voicebank was recorded, almost always 120
+            int velocityAmount = Convert.ToInt32(ConfigurationManager.AppSettings["velocityAmount"]); // how much velocity is added or subtracted to notes smaller or larger than a quarter note
+            bool doManualVelocity = bool.Parse(ConfigurationManager.AppSettings["doManualVelocity"]); // enables manual velocity variables (doesnt do anything at the moment)
+            int manualVelocity = Convert.ToInt32(ConfigurationManager.AppSettings["manualVelocity"]);
+            int qNoteLength = Convert.ToInt32(ConfigurationManager.AppSettings["qNoteLength"]); // length of a quarter note, shouldn't really be changed but whatever
+            bool endingVelocity = bool.Parse(ConfigurationManager.AppSettings["endingVelocity"]); // whether or not the plugin will edit the velocity of ending notes
+            bool beginningVelocity = bool.Parse(ConfigurationManager.AppSettings["beginningVelocity"]); // whether or not the plugin will edit the velocity of starting -CV or -CC notes
+            bool modSmooth = bool.Parse(ConfigurationManager.AppSettings["modSmooth"]); // whether or not the plugin will set mod to 0 on Phase 2
 
             if (doManualVelocity == true)
             {
@@ -34,7 +30,9 @@ namespace AutoVelocity
                 manualVelocity = Int32.Parse(Console.ReadLine());
             }
 
-            Console.WriteLine("CONFIG VARIABLES \n");
+            // Print console information
+            Console.WriteLine("AutoVelocity v1.0.0 by vocatart\n\n");
+            Console.WriteLine("CONFIG VARIABLES\n");
             Console.WriteLine("baseVelocity=" + baseVelocity);
             Console.WriteLine("baseTempo=" + baseTempo);
             Console.WriteLine("velocityAmount=" + velocityAmount);
