@@ -23,6 +23,8 @@ namespace AutoVelocity
             bool endingVelocity = bool.Parse(ConfigurationManager.AppSettings["endingVelocity"]); // whether or not the plugin will edit the velocity of ending notes
             bool beginningVelocity = bool.Parse(ConfigurationManager.AppSettings["beginningVelocity"]); // whether or not the plugin will edit the velocity of starting -CV or -CC notes
             bool modSmooth = bool.Parse(ConfigurationManager.AppSettings["modSmooth"]); // whether or not the plugin will set mod to 0 on Phase 2
+            string consonantScope = ConfigurationManager.AppSettings["consonantScope"]; // Scope of consonants to look for. Defaults to VCCV English style.
+            string vowelScope = ConfigurationManager.AppSettings["vowelScope"]; // Same as above, except with vowels. & -> &amp; due to it needing an escape character.
 
             if (doManualVelocity == true)
             {
@@ -31,7 +33,7 @@ namespace AutoVelocity
             }
 
             // Print console information
-            Console.WriteLine("AutoVelocity v1.0.0 by vocatart\n\n");
+            Console.WriteLine("AutoVelocity v1.1.0 by vocatart\n\n");
             Console.WriteLine("CONFIG VARIABLES\n");
             Console.WriteLine("baseVelocity=" + baseVelocity);
             Console.WriteLine("baseTempo=" + baseTempo);
@@ -44,7 +46,9 @@ namespace AutoVelocity
             Console.WriteLine("endingVelocity=" + endingVelocity);
             Console.WriteLine("beginningVelocity=" + beginningVelocity);
             Console.WriteLine("modSmooth=" + modSmooth);
-            Console.WriteLine("qNoteLength=" + qNoteLength + "\n");
+            Console.WriteLine("qNoteLength=" + qNoteLength);
+            Console.WriteLine("consonantScope=" + consonantScope);
+            Console.WriteLine("vowelScope=" + vowelScope  + "\n");
 
             Console.WriteLine("Please select mode:\n" +
                 "(Phase 1) Calculate velocity of CV notes (1)\n" +
@@ -85,7 +89,7 @@ namespace AutoVelocity
                     bool containsBeginningCV = findBeginningCV.IsMatch(note.GetLyric());
 
                     // regex to define NON CV notes
-                    Regex findCV = new Regex("[bdfgjkpstvzclmnrwyh](.*)[aeiouE93@AIO86x&10](.*)");
+                    Regex findCV = new Regex("[" + consonantScope + "](.*)[" + vowelScope + "](.*)");
                     bool isCV = findCV.IsMatch(note.GetLyric());
 
                     if (containsBeginningCV == true & beginningVelocity == false) // catches notes that are -CV notes
@@ -166,7 +170,7 @@ namespace AutoVelocity
                     int previousVelocity = note.Prev.GetVelocity();
 
                     // regex to define CV notes
-                    Regex findCV = new Regex("[bdfgjkpstvzclmnrwyh](.*)[aeiouE93@AIO86x&10](.*)");
+                    Regex findCV = new Regex("[" + consonantScope + "](.*)[" + vowelScope + "](.*)");
                     bool isCV = findCV.IsMatch(note.GetLyric());
 
                     // regex to define ending notes
@@ -232,7 +236,7 @@ namespace AutoVelocity
                     bool containsBeginningCV = findBeginningCV.IsMatch(note.GetLyric());
 
                     // regex to define NON CV notes
-                    Regex findCV = new Regex("[bdfgjkpstvzclmnrwyh](.*)[aeiouE93@AIO86x&10](.*)");
+                    Regex findCV = new Regex("[" + consonantScope + "](.*)[" + vowelScope + "](.*)");
                     bool isCV = findCV.IsMatch(note.GetLyric());
 
                     if (containsBeginningCV == true & beginningVelocity == false) // catches notes that are -CV notes
@@ -303,7 +307,7 @@ namespace AutoVelocity
                     int previousVelocity = note.Prev.GetVelocity();
 
                     // regex to define CV notes
-                    Regex findCV = new Regex("[bdfgjkpstvzclmnrwyh](.*)[aeiouE93@AIO86x&10](.*)");
+                    Regex findCV = new Regex("[" + consonantScope + "](.*)[" + vowelScope + "](.*)");
                     bool isCV = findCV.IsMatch(note.GetLyric());
 
                     // regex to define ending notes
