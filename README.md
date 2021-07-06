@@ -16,4 +16,6 @@ AutoVelocity has multiple user-definable variables in the AutoVelocity.exe.confi
 | qNoteLength | 480 | int | Length of a quarter note in UTAU-defined ticks. |
 | endingVelocity | true | bool | If true, plugin will change the velocity of ending-type notes. |
 | beginningVelocity | true | bool | If true, plugin will change the velocity of beginning-type notes. |
-| modSmooth | true | bool | If true, plugin will apply a modulation value of 0 during phase 2 velocity setting.
+| modSmooth | true | bool | If true, plugin will apply a modulation value of 0 during phase 2 velocity setting. |
+| consonantScope | bdfgjkpstvzclmnrwyh | string | String that is used to find all consonants. If a consonant contains multiple characters, only the first one needs to be in this list for it to be recognized. ex. VCCV's sk. |
+| vowelScope | aeiouE93@AIO86x&amp;10 | string | String that is used to find all vowels. If a vowel contains multiple characters, only the first one needs to be in this list for it to be recognized. For special characters such as &, the xml escape code must be used.
